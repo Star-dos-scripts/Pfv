@@ -8,23 +8,19 @@ local Tab = Window:MakeTab({
 Tab:AddButton({
 	Name = "Button!",
 	Callback = function()
-      		-- Script para deixar o modelo "001_BurgerBarn" transparente
+-- Script para teleportar o jogador até o "003_CouchGiveTool"
 
--- Primeiro, localiza o modelo na workspace
-local burgerBarn = workspace:FindFirstChild("001_BurgerBarn")
+local target = workspace:FindFirstChild("003_CouchGiveTool")
 
--- Verifica se o modelo existe
-if burgerBarn then
-    -- Percorre todos os descendentes do modelo
-    for _, part in ipairs(burgerBarn:GetDescendants()) do
-        -- Verifica se é uma peça que pode ficar transparente
-        if part:IsA("BasePart") then
-            part.Transparency = 1
-            part.CanCollide = false -- opcional: desativa colisão também
-        end
+if target and target:IsA("BasePart") then
+    -- Teleporta o jogador local (em exploits geralmente é game.Players.LocalPlayer)
+    local player = game.Players.LocalPlayer
+    if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+        player.Character.HumanoidRootPart.CFrame = target.CFrame + Vector3.new(0, 5, 0)
+        -- O + Vector3.new(0, 5, 0) evita que o jogador fique preso no chão
     end
 else
-    warn("Modelo '001_BurgerBarn' não encontrado!")
+    warn("Objeto '003_CouchGiveTool' não encontrado ou não é uma peça válida!")
 end
   	end    
 })
